@@ -3,6 +3,7 @@ version: '3'
 services:
   poke-api:
     build: .
+    container_name: poke-api
     entrypoint:
       - /entrypoint.sh
     ports:
