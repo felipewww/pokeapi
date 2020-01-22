@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  poke-api:
+    build: .
+    entrypoint:
+      - /entrypoint.sh
+    ports:
+    - 8080:8080
+    tty: true
+    volumes:
+      - ./app:/app
+    image: dasa/poke-api:latest
