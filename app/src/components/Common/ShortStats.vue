@@ -1,10 +1,10 @@
 <template>
   <div class="poke-stats">
     <div>
-      <font-awesome-icon class="gold" icon="star"></font-awesome-icon> 64
+      <font-awesome-icon class="gold" icon="star"></font-awesome-icon> {{ xp }}
     </div>
     <div>
-      <font-awesome-icon icon="weight-hanging"></font-awesome-icon> 69
+      <font-awesome-icon icon="weight-hanging"></font-awesome-icon> {{ weight }}
     </div>
   </div>
 </template>
@@ -15,7 +15,8 @@ import { faStar, faWeightHanging } from '@fortawesome/free-solid-svg-icons'
 library.add(faStar, faWeightHanging)
 
 export default {
-  name: 'ShortStats'
+  name: 'ShortStats',
+  props: ['weight', 'xp']
 }
 </script>
 

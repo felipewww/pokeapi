@@ -7,8 +7,8 @@
       <img class="logo" alt="logo" src="../../assets/images/logo.svg">
       <div class="row">
         <div class="col-sm-12 offset-md-3 col-md-6">
-          <input id="search" type="text" placeholder="Procure seu pokémon">
-          <div class="search-button">
+          <input @keypress.enter="search" id="search" type="text" placeholder="Procure seu pokémon" v-model="searchValue">
+          <div class="search-button" @click="search">
             <font-awesome-icon icon="search"></font-awesome-icon>
           </div>
         </div>
@@ -21,10 +21,34 @@
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import Pokemon from '../../mixins/Pokemon'
+import PokemonService from '../../services/PokemonService'
 library.add(faSearch)
 
 export default {
-  name: 'Finder'
+  name: 'Finder',
+  data () {
+    return {
+      searchValue: ''
+    }
+  },
+  methods: {
+    async search () {
+      const service = new PokemonService();
+
+      service.get(this.searchValue)
+        .then(res => {
+          this.$root.$emit('pokemonFound', new Pokemon(res.data));
+        })
+        .catch(err => {
+          this.$root.$emit('searchError', err);
+          alert(`Erro inesperado ao procurar pelo pokemon ${this.searchValue}`);
+        })
+        .finally(() => {
+          this.searchValue = '';
+        })
+    }
+  }
 }
 </script>
 
@@ -32,6 +56,7 @@ export default {
   img.logo {
     margin: 0 auto;
     display: block;
+    margin-bottom: 150px;
   }
 
   .finder {
