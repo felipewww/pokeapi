@@ -57,7 +57,7 @@ export default {
         this.levenshtein.setRootObject(this.all);
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
         alert('falha ao consultar POKEAPI. Recarregue a tela e tente novamente')
       })
   },
