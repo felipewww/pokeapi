@@ -1,16 +1,14 @@
 <template>
-  <div class="finder h-100">
+  <div class="finder h-25 container-fluid">
     <div class="wallpaper"></div>
     <div class="overlay"></div>
 
-    <div class="container h-100">
-      <img class="logo" alt="logo" src="../../assets/images/logo.svg">
-      <div class="row">
-        <div class="col-sm-12 offset-md-3 col-md-6">
-          <input @keypress.enter="search" id="search" type="text" placeholder="Procure seu pokémon" v-model="searchValue">
-          <div class="search-button" @click="search">
-            <font-awesome-icon icon="search"></font-awesome-icon>
-          </div>
+    <div class="container">
+        <img class="logo" alt="logo" src="../../assets/images/logo.svg">
+      <div class="col-sm-12 offset-md-3 col-md-6">-->
+        <input @keypress.enter="search" id="search" type="text" placeholder="Pesquisa por nome ou ID" v-model="searchValue">
+        <div class="search-button" @click="search">
+          <font-awesome-icon icon="search"></font-awesome-icon>
         </div>
       </div>
     </div>
@@ -29,11 +27,26 @@ export default {
   name: 'Finder',
   data () {
     return {
-      searchValue: ''
+      searchValue: '',
     }
   },
+
+  mounted () {
+    this.$root.$once('searchFromList', this.searchFromList)
+  },
+
   methods: {
-    async search () {
+    /**
+     * Recursividade para evitar propagation de evento
+     * @param pokeBasic
+     */
+    searchFromList (pokeBasic) {
+      this.searchValue = pokeBasic.name;
+      this.search();
+      this.$root.$once('searchFromList', this.searchFromList)
+    },
+
+    search () {
       const service = new PokemonService();
 
       service.get(this.searchValue)
@@ -42,6 +55,7 @@ export default {
         })
         .catch(err => {
           this.$root.$emit('searchError', err);
+          console.log(err);
           alert(`Erro inesperado ao procurar pelo pokemon ${this.searchValue}`);
         })
         .finally(() => {
@@ -56,7 +70,7 @@ export default {
   img.logo {
     margin: 0 auto;
     display: block;
-    margin-bottom: 150px;
+    margin-bottom: 15px;
   }
 
   .finder {
@@ -65,7 +79,7 @@ export default {
       top: 0;
       right: 0;
       width: 100%;
-      height: 100%;
+      height: 25%;
     }
 
     .wallpaper {
@@ -79,7 +93,6 @@ export default {
     }
 
     .container {
-      padding-top: 25vh;
       position: relative;
     }
   }
@@ -100,7 +113,7 @@ export default {
   .search-button {
     position: absolute;
     right: 23px;
-    top: 3px;
+    top: 27px;
     background: red;
     color: #fff;
     width: 50px;

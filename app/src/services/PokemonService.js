@@ -7,5 +7,9 @@ export default function PokemonService () {
     return axios.get(this.url + name)
   };
 
+  this.all = () => {
+    return axios.get(this.url + '?offset=0&limit=964')
+  };
+
   return this
 }

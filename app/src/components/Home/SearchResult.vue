@@ -113,6 +113,7 @@ export default {
 
   .stat {
     margin-bottom: 15px;
+    float: left;
 
     .value{
       color: #484747;

@@ -1,5 +1,5 @@
 <template>
-  <div class="poke-stats">
+  <div v-if="xp && weight" class="poke-stats">
     <div>
       <font-awesome-icon class="gold" icon="star"></font-awesome-icon> {{ xp }}
     </div>

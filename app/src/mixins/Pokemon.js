@@ -1,4 +1,8 @@
 export default function Pokemon (pokeServiceResponse) {
+  if (!pokeServiceResponse) {
+    throw new Error('Blank response')
+  }
+
   this.name = pokeServiceResponse.name;
   this.xp = pokeServiceResponse.base_experience;
   this.stats = pokeServiceResponse.stats;
