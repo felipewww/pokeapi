@@ -12,5 +12,16 @@ $ docker-compose up --build
 - node v10
  ```
 $ npm install -g @vue/cli
+$ cd app
 $ npm run serve
  ```
+
+#### Tests
+```
+$ npm run test:unit
+```
+
+#### Build
+```
+$ npm run build
+```
